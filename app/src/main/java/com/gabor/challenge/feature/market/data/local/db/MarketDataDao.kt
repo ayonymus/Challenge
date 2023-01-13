@@ -8,12 +8,12 @@ import androidx.room.Query
 @Dao
 interface MarketDataDao {
 
-    @Query("SELECT * FROM MARKET_TABLE")
+    @Query("SELECT * FROM $MARKET_TABLE" )
     fun getMarketData(): List<MarketDataEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(users: List<MarketDataEntity>)
+    suspend fun insertAll(data: List<MarketDataEntity>)
 
-    @Query("DELETE FROM MarketDataEntity")
+    @Query("DELETE FROM $MARKET_TABLE")
     suspend fun clear()
 }
