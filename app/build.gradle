@@ -71,6 +71,14 @@ dependencies {
     implementation "androidx.room:room-ktx:$room_version"
     implementation "androidx.room:room-paging:$room_version"
 
+    implementation "com.jakewharton.timber:timber:5.0.1"
+
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4") {
+        exclude group: "org.jetbrains.kotlinx", module: "kotlinx-coroutines-debug"
+    }
+
+    testImplementation "org.mockito.kotlin:mockito-kotlin:4.0.0"
+    
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
