@@ -1,4 +1,4 @@
-package com.gabor.challenge.feature.market.domain
+package com.gabor.challenge.feature.market.domain.entites
 
 data class Coin(
     val symbol: String,
