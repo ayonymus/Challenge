@@ -9,7 +9,7 @@ import retrofit2.http.Query
 
 interface CoingeckoMarketDataApi {
 
-    @GET("v2/tickers")
+    @GET("api/v3/coins/markets")
     suspend fun fetchMarketData(@Query("vs_currency", encoded = true) currency: String): Response<List<CoinggeckoMarketData>>
 
 }

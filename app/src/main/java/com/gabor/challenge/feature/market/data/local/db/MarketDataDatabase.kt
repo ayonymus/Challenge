@@ -11,18 +11,18 @@ import androidx.room.RoomDatabase
     exportSchema = false)
 abstract class MarketDataDatabase(): RoomDatabase() {
 
-    abstract fun marketDatabaseDao(): MarketDataDao
+    abstract fun marketDataDao(): MarketDataDao
 
     companion object {
 
         @Volatile
-        private var INSTANCE: RoomDatabase? = null
+        private var INSTANCE: MarketDataDatabase? = null
 
-        fun getDatabase(context: Context): RoomDatabase {
+        fun getDatabase(context: Context): MarketDataDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    RoomDatabase::class.java,
+                    MarketDataDatabase::class.java,
                     "market_database"
                 ).build()
                 INSTANCE = instance

@@ -29,7 +29,7 @@ import com.gabor.challenge.feature.market.presentation.MarketUiState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MarketScreen(state: State<MarketUiState>, onFilterChange: (text: String) -> Unit) {
+fun MarketScreen(state: State<MarketUiState>) {
 
     Scaffold(
         topBar =  { TopAppBar(title = { Text(text = "Title") }) },
@@ -93,7 +93,7 @@ fun MarketList(
 fun MarketListScreenInitialPreview() {
     val marketSate = MarketUiState(true, null, null)
     val state = mutableStateOf(marketSate)
-    MarketScreen(state) { }
+    MarketScreen(state)
 }
 
 
@@ -110,5 +110,5 @@ fun MarketListScreenWithDataPreview() {
         latestData = listOf(marketData, marketData),
         errors = null)
     val state = mutableStateOf(marketSate)
-    MarketScreen(state) { }
+    MarketScreen(state)
 }
