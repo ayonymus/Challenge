@@ -1,6 +1,5 @@
-package com.gabor.challenge.feature.market.data.repository
+package com.gabor.challenge.core.repository
 
-import com.gabor.challenge.feature.market.domain.repository.Repository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

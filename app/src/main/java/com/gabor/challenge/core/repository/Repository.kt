@@ -1,4 +1,4 @@
-package com.gabor.challenge.feature.market.domain.repository
+package com.gabor.challenge.core.repository
 
 interface Repository<Arg, Res> {
 

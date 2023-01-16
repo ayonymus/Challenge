@@ -1,4 +1,4 @@
-package com.gabor.challenge.feature.market.data.repository
+package com.gabor.challenge.core.repository
 
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
