@@ -1,4 +1,4 @@
-package com.gabor.challenge.feature.di
+package com.gabor.challenge.di
 
 import com.gabor.challenge.BuildConfig
 import com.gabor.challenge.feature.market.data.remote.CoingeckoMarketDataApi

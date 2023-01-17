@@ -1,8 +1,8 @@
-package com.gabor.challenge.feature.di
+package com.gabor.challenge.di
 
 import android.content.Context
 import com.gabor.challenge.feature.market.data.local.DatabaseLocalDataSource
-import com.gabor.challenge.feature.market.data.local.db.MarketDataDatabase
+import com.gabor.challenge.database.MarketDataDatabase
 import com.gabor.challenge.feature.market.data.remote.RemoteMarketDataSource
 import com.gabor.challenge.core.repository.CachingRepository
 import com.gabor.challenge.core.repository.LocalDataSource
@@ -32,14 +32,6 @@ fun provideMarketDataRepository(
     return object : CachingRepository<FiatCurrency, List<MarketData>>(localMarketDataSource, remoteMarketDataSource) { }
 
 }
-
-val marketDatabaseModule = module {
-    single { createMarketDataDatabase(get()) }
-    factory { createMarketDataDao(get()) }
-}
-
-fun createMarketDataDatabase(context: Context) = MarketDataDatabase.getDatabase(context)
-fun createMarketDataDao(db: MarketDataDatabase) = db.marketDataDao()
 
 val marketUiModule = module {
     factory { FetchMarketDataUseCase(get(), get()) }

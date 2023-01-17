@@ -1,4 +1,4 @@
-package com.gabor.challenge.feature.settings.domain
+package com.gabor.challenge.core.preferences.domain
 
 import com.gabor.challenge.feature.market.domain.entites.FiatCurrency
 

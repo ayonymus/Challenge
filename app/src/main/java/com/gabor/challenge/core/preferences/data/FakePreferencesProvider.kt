@@ -1,8 +1,8 @@
-package com.gabor.challenge.feature.settings.data
+package com.gabor.challenge.core.preferences.data
 
 import com.gabor.challenge.feature.market.domain.entites.FiatCurrency
-import com.gabor.challenge.feature.settings.domain.Preferences
-import com.gabor.challenge.feature.settings.domain.PreferencesProvider
+import com.gabor.challenge.core.preferences.domain.Preferences
+import com.gabor.challenge.core.preferences.domain.PreferencesProvider
 
 class FakePreferencesProvider: PreferencesProvider {
 

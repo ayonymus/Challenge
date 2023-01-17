@@ -1,8 +1,8 @@
 package com.gabor.challenge.feature.market.data.local
 
-import com.gabor.challenge.feature.market.data.local.db.MarketDataDao
-import com.gabor.challenge.feature.market.data.local.db.toMarketData
-import com.gabor.challenge.feature.market.data.local.db.toMarketDataEntity
+import com.gabor.challenge.database.market.MarketDataDao
+import com.gabor.challenge.database.market.toMarketData
+import com.gabor.challenge.database.market.toMarketDataEntity
 import com.gabor.challenge.core.repository.LocalDataSource
 import com.gabor.challenge.feature.market.domain.entites.FiatCurrency
 import com.gabor.challenge.feature.market.domain.entites.MarketData

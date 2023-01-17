@@ -3,8 +3,8 @@ package com.gabor.challenge.feature.market.usecase
 import com.gabor.challenge.feature.market.domain.entites.FiatCurrency
 import com.gabor.challenge.feature.market.domain.entites.MarketData
 import com.gabor.challenge.core.repository.Repository
-import com.gabor.challenge.feature.settings.domain.Preferences
-import com.gabor.challenge.feature.settings.domain.PreferencesProvider
+import com.gabor.challenge.core.preferences.domain.Preferences
+import com.gabor.challenge.core.preferences.domain.PreferencesProvider
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*

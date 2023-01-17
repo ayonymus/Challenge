@@ -1,4 +1,4 @@
-package com.gabor.challenge.feature.di
+package com.gabor.challenge.di
 
 import org.koin.dsl.module
 

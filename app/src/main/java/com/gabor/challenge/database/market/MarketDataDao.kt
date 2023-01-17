@@ -1,4 +1,4 @@
-package com.gabor.challenge.feature.market.data.local.db
+package com.gabor.challenge.database.market
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -9,7 +9,7 @@ import androidx.room.Query
 interface MarketDataDao {
 
     @Query("SELECT * FROM $MARKET_TABLE" )
-    fun getMarketData(): List<MarketDataEntity>
+    suspend fun getMarketData(): List<MarketDataEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(data: List<MarketDataEntity>)

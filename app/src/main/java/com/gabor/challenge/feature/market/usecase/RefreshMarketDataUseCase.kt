@@ -3,7 +3,7 @@ package com.gabor.challenge.feature.market.usecase
 import com.gabor.challenge.feature.market.domain.entites.FiatCurrency
 import com.gabor.challenge.feature.market.domain.entites.MarketData
 import com.gabor.challenge.core.repository.Repository
-import com.gabor.challenge.feature.settings.domain.PreferencesProvider
+import com.gabor.challenge.core.preferences.domain.PreferencesProvider
 
 class RefreshMarketDataUseCase(
     private val repository: Repository<FiatCurrency, List<MarketData>>,

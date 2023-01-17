@@ -1,4 +1,4 @@
-package com.gabor.challenge.feature.market.data.local.db
+package com.gabor.challenge.database.market
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
