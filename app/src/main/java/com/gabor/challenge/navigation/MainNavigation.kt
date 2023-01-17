@@ -1,6 +1,7 @@
 package com.gabor.challenge.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,6 +13,7 @@ import com.gabor.challenge.feature.market.presentation.navigation.MarketRoute
 @Composable
 fun MainNavigation() {
     val navController = rememberNavController()
+    val uriHandler = LocalUriHandler.current
 
     NavHost(
         navController = navController,
@@ -32,7 +34,10 @@ fun MainNavigation() {
             ) { backStackEntry ->
                 CoinDetailsRoute(
                     id = backStackEntry.arguments?.getString("id"),
-                    onNavigateBack = { navController.popBackStack()}
+                    onNavigateBack = { navController.popBackStack()},
+                    onUrlClick = { uri ->
+                        uriHandler.openUri(uri)
+                    }
                 )
             }
     }

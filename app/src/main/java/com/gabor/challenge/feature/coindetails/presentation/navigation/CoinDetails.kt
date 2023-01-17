@@ -12,12 +12,14 @@ import org.koin.androidx.compose.koinViewModel
 fun CoinDetailsRoute(
     viewModel: CoinDetailsViewModel = koinViewModel(),
     id: String?,
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    onUrlClick: (url: String) -> Unit
 ) {
     remember { viewModel.handleIntent(CoinDetailsIntent.Fetch(id)) }
     CoinDetailsScreen(
         state = viewModel.coinDetailsFlow.collectAsState(),
         onNavigateBack = onNavigateBack,
-        onRefresh = { viewModel.handleIntent(CoinDetailsIntent.Refresh(id)) }
+        onRefresh = { viewModel.handleIntent(CoinDetailsIntent.Refresh(id)) },
+        onUrlClick = onUrlClick
     )
 }

@@ -25,7 +25,8 @@ import kotlinx.coroutines.launch
 fun CoinDetailsScreen(
     state: State<CoinDetailsUiState>,
     onNavigateBack: () -> Unit,
-    onRefresh: () -> Unit
+    onRefresh: () -> Unit,
+    onUrlClick: (url: String) -> Unit
 ) {
     val pullRefreshState = rememberPullRefreshState(state.value.isLoading, onRefresh)
     val snackbarHostState = remember { SnackbarHostState() }
@@ -49,7 +50,7 @@ fun CoinDetailsScreen(
                 if (data.latestData == null) {
                     CoinDetailsLoading()
                 } else {
-                    DisplayCoinDetails(data.latestData)
+                    DisplayCoinDetails(data.latestData, onUrlClick)
                 }
             }
             if (state.value.hasError) {
@@ -85,7 +86,7 @@ fun appBar(onNavigateBack: () -> Unit) {
 @Composable
 fun CoinDetailsScreenInitialPreview() {
     val state = mutableStateOf(CoinDetailsUiState(true, null, false))
-    CoinDetailsScreen(state, { }) { }
+    CoinDetailsScreen(state, { }, { }) { }
 }
 
 @Preview
@@ -101,6 +102,6 @@ fun CoinDetailsScreenDataPreview() {
         lastUpdated = ""
     )
     val state = mutableStateOf(CoinDetailsUiState(false, data, false))
-    CoinDetailsScreen(state, { }) { }
+    CoinDetailsScreen(state, { }, { }) { }
 }
 
