@@ -16,21 +16,7 @@ fun CoinDetailsRoute(
     viewModel.handleIntent(CoinDetailsIntent.Fetch(id))
     CoinDetailsScreen(
         state = viewModel.coinDetailsFlow.collectAsState(),
-        onNavigateBack = onNavigateBack
+        onNavigateBack = onNavigateBack,
+        onRefresh = { viewModel.handleIntent(CoinDetailsIntent.Refresh(id)) }
     )
 }
-
-/*
-@Composable
-fun MarketRoute(
-    viewModel: MarketViewModel = koinViewModel(),
-    onNavigateToDetails: (id: String) -> Unit
-) {
-    viewModel.handleIntent(MarketIntent.Fetch)
-    MarketScreen(
-        state = viewModel.marketFlow.collectAsState(),
-        onNavigateToDetails = onNavigateToDetails
-    )
-}
-
- */

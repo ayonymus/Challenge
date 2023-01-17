@@ -34,10 +34,8 @@ fun MarketScreen(
     onRefresh: () -> Unit
 ) {
     val pullRefreshState = rememberPullRefreshState(state.value.isLoading, onRefresh)
-
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
-
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -60,15 +58,15 @@ fun MarketScreen(
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
-                if (state.value.errors != null) {
-                    scope.launch {
-                        val snackbarResult = snackbarHostState.showSnackbar(
-                            message = "Error loading data", // TODO
-                            actionLabel = "REFRESH",
-                        )
-                        if (snackbarResult == SnackbarResult.ActionPerformed) {
-                            onRefresh()
-                        }
+            }
+            if (state.value.errors != null) {
+                scope.launch {
+                    val snackbarResult = snackbarHostState.showSnackbar(
+                        message = "Error loading data", // TODO
+                        actionLabel = "REFRESH",
+                    )
+                    if (snackbarResult == SnackbarResult.ActionPerformed) {
+                        onRefresh()
                     }
                 }
             }

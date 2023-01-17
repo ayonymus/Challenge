@@ -1,37 +1,67 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 
 package com.gabor.challenge.feature.coindetails.presentation.ui
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gabor.challenge.R
 import com.gabor.challenge.feature.coindetails.domain.CoinDetails
 import com.gabor.challenge.feature.coindetails.presentation.CoinDetailsUiState
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 
 @Composable
-fun CoinDetailsScreen(state: State<CoinDetailsUiState>, onNavigateBack: () -> Unit) {
+fun CoinDetailsScreen(
+    state: State<CoinDetailsUiState>,
+    onNavigateBack: () -> Unit,
+    onRefresh: () -> Unit
+) {
+    val pullRefreshState = rememberPullRefreshState(state.value.isLoading, onRefresh)
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar =  { appBar(onNavigateBack) },
         content = { contentPadding ->
-            Column(
-                modifier = Modifier.padding(contentPadding)
+            Box(
+                modifier = Modifier
+                    .padding(contentPadding)
+                    .pullRefresh(pullRefreshState)
             ) {
-                if (state.value.isLoading) {
+                val data = state.value
+                if (data.isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
+                if (data.latestData == null) {
                     CoinDetailsLoading()
                 } else {
-                    state.value.latestData?.let {
-                        DisplayCoinDetails(it)
+                    DisplayCoinDetails(data.latestData)
+                }
+            }
+            if (state.value.error != null) {
+                scope.launch {
+                    val snackbarResult = snackbarHostState.showSnackbar(
+                        message = "Error loading data", // TODO
+                        actionLabel = "REFRESH",
+                    )
+                    if (snackbarResult == SnackbarResult.ActionPerformed) {
+                        onRefresh()
                     }
                 }
             }
@@ -55,7 +85,7 @@ fun appBar(onNavigateBack: () -> Unit) {
 @Composable
 fun CoinDetailsScreenInitialPreview() {
     val state = mutableStateOf(CoinDetailsUiState(true, null, null))
-    CoinDetailsScreen(state) { }
+    CoinDetailsScreen(state, { }) { }
 }
 
 @Preview
@@ -71,6 +101,6 @@ fun CoinDetailsScreenDataPreview() {
         lastUpdated = ""
     )
     val state = mutableStateOf(CoinDetailsUiState(false, data, null))
-    CoinDetailsScreen(state) { }
+    CoinDetailsScreen(state, { }) { }
 }
 

@@ -41,11 +41,16 @@ class CoinDetailsViewModel(
         }
     }
 
-    private fun refresh(id: String): CoinDetailsUiState {
-        viewModelScope.launch {
-            handleResult(refreshCoinDetailsUseCase(id))
+    private fun refresh(id: String?): CoinDetailsUiState {
+        return if (id == null) {
+            Timber.e("Coin ID not received!")
+            _coinDetailsFlow.value.copy(isLoading = false, error = "Coin ID not received") // TODO
+        } else {
+            viewModelScope.launch {
+                handleResult(refreshCoinDetailsUseCase(id))
+            }
+            _coinDetailsFlow.value.copy(isLoading = true)
         }
-        return _coinDetailsFlow.value.copy(isLoading = true)
     }
 
     private suspend fun handleResult(result: Result<CoinDetails?>) {
@@ -80,5 +85,5 @@ data class CoinDetailsUiState(
 
 sealed class CoinDetailsIntent {
     data class Fetch(val id: String?) : CoinDetailsIntent()
-    data class Refresh(val id: String) : CoinDetailsIntent()
+    data class Refresh(val id: String?) : CoinDetailsIntent()
 }
