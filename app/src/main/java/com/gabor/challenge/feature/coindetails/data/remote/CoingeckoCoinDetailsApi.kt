@@ -9,7 +9,7 @@ import retrofit2.http.Path
 interface CoingeckoCoinDetailsApi {
 
     @GET("api/v3/coins/{id}")
-    suspend fun fetchMarketData(@Path("id") id: String): Response<CoingeckoCoinDetails>
+    suspend fun fetchMarketData(@Path("id") id: String): Response<CoingeckoCoinDetails?>
 
 }
 
@@ -25,8 +25,8 @@ data class CoingeckoCoinDetails(
     @SerializedName("image") val image: Image? = Image(),
     @SerializedName("country_origin") val countryOrigin: String? = null,
     @SerializedName("genesis_date") val genesisDate: String? = null,
-    @SerializedName("sentiment_votes_up_percentage") val sentimentVotesUpPercentage: Int? = null,
-    @SerializedName("sentiment_votes_down_percentage") val sentimentVotesDownPercentage: Int? = null,
+    @SerializedName("sentiment_votes_up_percentage") val sentimentVotesUpPercentage: Double? = null,
+    @SerializedName("sentiment_votes_down_percentage") val sentimentVotesDownPercentage: Double? = null,
     @SerializedName("market_cap_rank") val marketCapRank: Int? = null,
     @SerializedName("coingecko_rank") val coingeckoRank: Int? = null,
     @SerializedName("coingecko_score") val coingeckoScore: Double? = null,

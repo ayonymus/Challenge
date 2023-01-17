@@ -5,17 +5,19 @@ import com.gabor.challenge.database.coindetails.CoinDetailsDao
 import com.gabor.challenge.database.coindetails.CoinDetailsEntity
 import com.gabor.challenge.feature.coindetails.domain.CoinDetails
 
-class DatabaseLocalDataSource(
-    private val marketDataDao: CoinDetailsDao
-): LocalDataSource<String, CoinDetails> {
+class LocalCoinDetailsDataSource(
+    private val coinDetailsDao: CoinDetailsDao
+): LocalDataSource<String, CoinDetails?> {
 
-    override suspend fun fetch(arg: String): Result<CoinDetails> {
-        return Result.success(marketDataDao.getCoinDetails(arg).toDomain())
+    override suspend fun fetch(arg: String): Result<CoinDetails?> {
+        return Result.success(coinDetailsDao.getCoinDetails(arg)?.toDomain())
     }
 
-    override suspend fun update(arg: String, data: CoinDetails) {
-        marketDataDao.clear()
-        marketDataDao.insertCoinDetails(data.toDatabaseEntity())
+    override suspend fun update(arg: String, data: CoinDetails?) {
+        data?.let {
+            coinDetailsDao.clear()
+            coinDetailsDao.insertCoinDetails(data.toDatabaseEntity())
+        }
     }
 }
 

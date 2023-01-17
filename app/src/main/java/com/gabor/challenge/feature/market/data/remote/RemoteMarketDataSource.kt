@@ -15,7 +15,7 @@ class RemoteMarketDataSource(
             if (data != null) {
                 Result.success(data.map { it.toMarketData(arg) })
             } else {
-                Result.failure(ApiErrorException(response.message(), response.errorBody()?.toString()))
+                Result.failure(ApiErrorException(response.message(), response.code(), response.errorBody()?.toString()))
             }
         } catch (exception: Exception) {
             Result.failure(exception)
@@ -25,5 +25,6 @@ class RemoteMarketDataSource(
 
 class ApiErrorException(
     message: String? = null,
+    val code: Int,
     val errorBody: String? = null
 ): Exception(message)

@@ -4,7 +4,7 @@ import android.content.Context
 import com.gabor.challenge.database.MarketDataDatabase
 import org.koin.dsl.module
 
-val marketDatabaseModule = module {
+val databaseModule = module {
     single { createMarketDataDatabase(get()) }
     factory { createMarketDataDao(get()) }
     factory { createCoinDetailsDao(get()) }

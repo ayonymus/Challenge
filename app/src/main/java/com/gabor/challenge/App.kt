@@ -2,7 +2,6 @@ package com.gabor.challenge
 
 import android.app.Application
 import com.gabor.challenge.di.*
-import com.gabor.challenge.feature.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
@@ -17,9 +16,13 @@ class App : Application(){
             modules(
                 appModule,
                 networkModule,
-                marketDatabaseModule,
+                databaseModule,
                 marketDataModule,
+                marketUseCaseModule,
                 marketUiModule,
+                coinDetailsModule,
+                coinDetailsUseCaseModule,
+                coinDetailsUiModule,
                 preferencesModule,
             )
         }

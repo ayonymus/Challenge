@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.gabor.challenge.database.coindetails.CoinDetailsDao
 import com.gabor.challenge.database.market.MarketDataDao
 import com.gabor.challenge.database.market.MarketDataEntity
 import com.gabor.challenge.database.coindetails.CoinDetailsEntity
@@ -12,11 +13,11 @@ import com.gabor.challenge.database.coindetails.CoinDetailsEntity
     entities = [MarketDataEntity::class, CoinDetailsEntity::class],
     version = 1,
     exportSchema = false)
-abstract class MarketDataDatabase(): RoomDatabase() {
+abstract class MarketDataDatabase: RoomDatabase() {
 
     abstract fun marketDataDao(): MarketDataDao
 
-    abstract fun coinDetailsDao(): MarketDataDao
+    abstract fun coinDetailsDao(): CoinDetailsDao
 
     companion object {
 

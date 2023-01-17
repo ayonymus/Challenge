@@ -13,10 +13,10 @@ class FetchMarketDataUseCase(
     suspend operator fun invoke(): Result<List<MarketData>> {
         val currency = preferencesProvider.getPreferences().selectedFiatCurrency
         val result = repository.fetchData(currency, false)
-        if (result.getOrNull()?.isEmpty() == true) {
-            return repository.fetchData(currency, true)
+        return if (result.getOrNull()?.isEmpty() == true) {
+            repository.fetchData(currency, true)
         } else {
-            return result
+            result
         }
     }
 }

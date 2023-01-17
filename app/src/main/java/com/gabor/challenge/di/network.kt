@@ -1,6 +1,7 @@
 package com.gabor.challenge.di
 
 import com.gabor.challenge.BuildConfig
+import com.gabor.challenge.feature.coindetails.data.remote.CoingeckoCoinDetailsApi
 import com.gabor.challenge.feature.market.data.remote.CoingeckoMarketDataApi
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -15,6 +16,7 @@ val networkModule = module {
     factory { provideGsonConverterFactory() }
     factory { provideCoingeckoRetrofitBuilder(get(), get()) }
     factory { provideMarketApi(get()) }
+    factory { provideCoinDetailsApi(get()) }
 }
 
 fun provideLoggingInterceptor(): HttpLoggingInterceptor {
@@ -46,3 +48,5 @@ fun provideCoingeckoRetrofitBuilder(
     .build()
 
 fun provideMarketApi(retrofit: Retrofit): CoingeckoMarketDataApi = retrofit.create(CoingeckoMarketDataApi::class.java)
+
+fun provideCoinDetailsApi(retrofit: Retrofit): CoingeckoCoinDetailsApi = retrofit.create(CoingeckoCoinDetailsApi::class.java)

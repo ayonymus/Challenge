@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Challenge</string>
+    <string name="coin_details">Coin Details</string>
     <string name="generic_error">There was an error downloading data.</string>
 </resources>

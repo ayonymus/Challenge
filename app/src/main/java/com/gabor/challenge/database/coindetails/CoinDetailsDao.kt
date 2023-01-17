@@ -7,7 +7,7 @@ import androidx.room.*
 interface CoinDetailsDao {
 
     @Query("SELECT * FROM $COIN_DETAILS_TABLE WHERE id=:id" )
-    fun getCoinDetails(id: String): CoinDetailsEntity
+    suspend fun getCoinDetails(id: String): CoinDetailsEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCoinDetails(data: CoinDetailsEntity)
@@ -15,12 +15,12 @@ interface CoinDetailsDao {
     @Query("DELETE FROM $COIN_DETAILS_TABLE")
     suspend fun clear()
 
-    @Query("DELETE FROM users WHERE id=:id")
-    fun deleteById(id: String)
+    @Query("DELETE FROM $COIN_DETAILS_TABLE WHERE id=:id")
+    suspend fun deleteById(id: String)
 
 }
 
-const val COIN_DETAILS_TABLE = "MARKET_TABLE"
+const val COIN_DETAILS_TABLE = "COIN_DETAILS_TABLE"
 
 @Entity(tableName = COIN_DETAILS_TABLE)
 data class CoinDetailsEntity(
