@@ -8,6 +8,7 @@ import com.gabor.challenge.feature.market.usecase.RefreshMarketDataUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class MarketViewModel(
     private val fetchMarketDataUseCase: FetchMarketDataUseCase,
@@ -53,6 +54,7 @@ class MarketViewModel(
                 )
             },
             onFailure = {
+                Timber.e(it)
                 _marketFlow.emit(
                     _marketFlow.value.copy(
                         isLoading = false,

@@ -10,7 +10,7 @@ const val MARKET_TABLE = "MARKET_TABLE"
 
 @Entity(tableName = MARKET_TABLE)
 data class MarketDataEntity(
-    @PrimaryKey(autoGenerate = true)val _id: Long,
+    @PrimaryKey val id: String,
     val symbol: String,
     val name: String,
     val image: String,
@@ -20,14 +20,14 @@ data class MarketDataEntity(
 
 fun MarketDataEntity.toMarketData() =
     MarketData(
-        coin = Coin(symbol = symbol, name = name, image = image),
+        coin = Coin(symbol = symbol, name = name, image = image, id = id),
         fiatCurrency = FiatCurrency(fiat),
         price = price
     )
 
 fun MarketData.toMarketDataEntity() =
     MarketDataEntity(
-        _id = 0,
+        id = coin.id,
         symbol = coin.symbol,
         name = coin.name,
         image = coin.image,

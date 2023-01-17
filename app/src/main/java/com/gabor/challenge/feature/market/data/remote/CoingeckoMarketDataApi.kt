@@ -17,13 +17,14 @@ interface CoingeckoMarketDataApi {
 data class CoinggeckoMarketData(
     val symbol: String,
     val name: String,
+    val id: String,
     val image: String,
     val current_price: Double
 )
 
 fun CoinggeckoMarketData.toMarketData(currency: FiatCurrency) =
     MarketData(
-        coin = Coin(symbol = symbol, name = name, image = image),
+        coin = Coin(symbol = symbol, name = name, image = image, id = id),
         fiatCurrency = currency,
         price = current_price
     )

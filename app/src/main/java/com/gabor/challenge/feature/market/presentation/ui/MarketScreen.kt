@@ -31,8 +31,10 @@ import com.gabor.challenge.feature.market.presentation.MarketUiState
 
 
 @Composable
-fun MarketScreen(state: State<MarketUiState>) {
-
+fun MarketScreen(
+    state: State<MarketUiState>,
+    onNavigateToDetails: (id: String) -> Unit,
+) {
     Scaffold(
         topBar =  { appBar() },
         content = { contentPadding ->
@@ -62,7 +64,7 @@ fun MarketScreen(state: State<MarketUiState>) {
                     }
 
                 }
-                MarketList(state = state.value)
+                MarketList(state = state.value, onNavigateToDetails = onNavigateToDetails)
             }
         }
     )
@@ -78,6 +80,7 @@ fun appBar() {
 @Composable
 fun MarketList(
     state: MarketUiState,
+    onNavigateToDetails: (id: String) -> Unit
 ) {
     val listState = rememberLazyListState()
 
@@ -91,7 +94,7 @@ fun MarketList(
             }
         } else {
             items(state.latestData) { data ->
-                MarketItem(data)
+                MarketItem(data, onNavigateToDetails)
             }
         }
     }
@@ -102,14 +105,14 @@ fun MarketList(
 fun MarketListScreenInitialPreview() {
     val marketSate = MarketUiState(true, null, null)
     val state = mutableStateOf(marketSate)
-    MarketScreen(state)
+    MarketScreen(state) { }
 }
 
 @Preview
 @Composable
 fun MarketListScreenWithDataPreview() {
     val marketData = MarketData(
-        coin = Coin("BTC", "Bitcoin", "https://s2.coinmarketcap.com/static/img/coins/64x64/2499.png"),
+        coin = Coin("BTC", "Bitcoin", "https://s2.coinmarketcap.com/static/img/coins/64x64/2499.png", "bitcoin"),
         fiatCurrency = FiatCurrency("USD"),
         price = 1.132
     )
@@ -118,5 +121,5 @@ fun MarketListScreenWithDataPreview() {
         latestData = listOf(marketData, marketData),
         errors = null)
     val state = mutableStateOf(marketSate)
-    MarketScreen(state)
+    MarketScreen(state) { }
 }

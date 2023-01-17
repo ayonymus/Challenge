@@ -1,8 +1,11 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.gabor.challenge.feature.market.presentation.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,10 +23,14 @@ import com.gabor.challenge.feature.market.domain.entites.MarketData
 
 
 @Composable
-fun MarketItem(marketData: MarketData) {
+fun MarketItem(
+    marketData: MarketData,
+    onNavigateToDetails: (id: String) -> Unit
+) {
     ElevatedCard(
         shape = MaterialTheme.shapes.small,
         modifier = Modifier.padding(4.dp),
+        onClick = { onNavigateToDetails(marketData.coin.id) }
     ) {
 
         ConstraintLayout(
@@ -88,9 +95,9 @@ fun MarketItem(marketData: MarketData) {
 @Composable
 fun MarketItemPreview() {
     val marketData = MarketData(
-        coin = Coin("CHSB", "SwissBorg", "https://s2.coinmarketcap.com/static/img/coins/64x64/2499.png"),
+        coin = Coin("CHSB", "SwissBorg", "https://s2.coinmarketcap.com/static/img/coins/64x64/2499.png", "swissborg"),
         fiatCurrency = FiatCurrency("USD"),
         price = 1.132
     )
-    MarketItem(marketData = marketData)
+    MarketItem(marketData = marketData, onNavigateToDetails = { })
 }
