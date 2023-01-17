@@ -4,8 +4,8 @@ import com.gabor.challenge.database.market.MarketDataDao
 import com.gabor.challenge.database.market.toMarketData
 import com.gabor.challenge.database.market.toMarketDataEntity
 import com.gabor.challenge.core.repository.LocalDataSource
-import com.gabor.challenge.feature.market.domain.entites.FiatCurrency
-import com.gabor.challenge.feature.market.domain.entites.MarketData
+import com.gabor.challenge.feature.market.domain.FiatCurrency
+import com.gabor.challenge.feature.market.domain.MarketData
 
 class DatabaseLocalDataSource(
     private val marketDataDao: MarketDataDao

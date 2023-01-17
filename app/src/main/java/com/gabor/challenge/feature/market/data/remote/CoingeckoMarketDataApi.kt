@@ -1,8 +1,8 @@
 package com.gabor.challenge.feature.market.data.remote
 
-import com.gabor.challenge.feature.market.domain.entites.Coin
-import com.gabor.challenge.feature.market.domain.entites.FiatCurrency
-import com.gabor.challenge.feature.market.domain.entites.MarketData
+import com.gabor.challenge.feature.market.domain.Coin
+import com.gabor.challenge.feature.market.domain.FiatCurrency
+import com.gabor.challenge.feature.market.domain.MarketData
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

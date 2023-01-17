@@ -17,9 +17,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import coil.compose.rememberAsyncImagePainter
-import com.gabor.challenge.feature.market.domain.entites.Coin
-import com.gabor.challenge.feature.market.domain.entites.FiatCurrency
-import com.gabor.challenge.feature.market.domain.entites.MarketData
+import com.gabor.challenge.feature.market.domain.Coin
+import com.gabor.challenge.feature.market.domain.FiatCurrency
+import com.gabor.challenge.feature.market.domain.MarketData
 
 
 @Composable
@@ -74,9 +74,8 @@ fun MarketItem(
                     }
             )
 
-            val tradePrice = marketData.price.toString()
             Text(
-                text = tradePrice,
+                text = "${marketData.fiatCurrency.currencyName} ${marketData.price}",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier

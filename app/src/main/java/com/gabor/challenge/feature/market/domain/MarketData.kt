@@ -1,4 +1,4 @@
-package com.gabor.challenge.feature.market.domain.entites
+package com.gabor.challenge.feature.market.domain
 
 data class MarketData(
     val coin: Coin,

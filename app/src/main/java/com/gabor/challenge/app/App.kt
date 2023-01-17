@@ -1,6 +1,7 @@
-package com.gabor.challenge
+package com.gabor.challenge.app
 
 import android.app.Application
+import com.gabor.challenge.BuildConfig
 import com.gabor.challenge.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -14,7 +15,6 @@ class App : Application(){
         startKoin{
             androidContext(this@App)
             modules(
-                appModule,
                 networkModule,
                 databaseModule,
                 marketDataModule,

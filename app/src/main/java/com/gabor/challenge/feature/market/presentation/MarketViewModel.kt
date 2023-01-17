@@ -2,7 +2,7 @@ package com.gabor.challenge.feature.market.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gabor.challenge.feature.market.domain.entites.MarketData
+import com.gabor.challenge.feature.market.domain.MarketData
 import com.gabor.challenge.feature.market.usecase.FetchMarketDataUseCase
 import com.gabor.challenge.feature.market.usecase.RefreshMarketDataUseCase
 import kotlinx.coroutines.flow.MutableStateFlow

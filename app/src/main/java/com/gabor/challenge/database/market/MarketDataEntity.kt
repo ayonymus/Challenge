@@ -2,9 +2,9 @@ package com.gabor.challenge.database.market
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.gabor.challenge.feature.market.domain.entites.Coin
-import com.gabor.challenge.feature.market.domain.entites.FiatCurrency
-import com.gabor.challenge.feature.market.domain.entites.MarketData
+import com.gabor.challenge.feature.market.domain.Coin
+import com.gabor.challenge.feature.market.domain.FiatCurrency
+import com.gabor.challenge.feature.market.domain.MarketData
 
 const val MARKET_TABLE = "MARKET_TABLE"
 
@@ -31,6 +31,6 @@ fun MarketData.toMarketDataEntity() =
         symbol = coin.symbol,
         name = coin.name,
         image = coin.image,
-        fiat = fiatCurrency.symbol,
+        fiat = fiatCurrency.currencyName,
         price = price
     )

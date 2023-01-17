@@ -6,8 +6,8 @@ import com.gabor.challenge.core.repository.RemoteDataSource
 import com.gabor.challenge.core.repository.Repository
 import com.gabor.challenge.feature.market.data.local.DatabaseLocalDataSource
 import com.gabor.challenge.feature.market.data.remote.RemoteMarketDataSource
-import com.gabor.challenge.feature.market.domain.entites.FiatCurrency
-import com.gabor.challenge.feature.market.domain.entites.MarketData
+import com.gabor.challenge.feature.market.domain.FiatCurrency
+import com.gabor.challenge.feature.market.domain.MarketData
 import com.gabor.challenge.feature.market.presentation.MarketViewModel
 import com.gabor.challenge.feature.market.usecase.FetchMarketDataUseCase
 import com.gabor.challenge.feature.market.usecase.RefreshMarketDataUseCase

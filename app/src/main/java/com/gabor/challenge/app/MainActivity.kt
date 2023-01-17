@@ -1,4 +1,4 @@
-package com.gabor.challenge
+package com.gabor.challenge.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,11 +7,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.gabor.challenge.navigation.MainNavigation
+import com.gabor.challenge.app.navigation.MainNavigation
 import com.gabor.challenge.ui.theme.ChallengeTheme
 
 class MainActivity : ComponentActivity() {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

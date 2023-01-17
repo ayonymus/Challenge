@@ -2,8 +2,8 @@ package com.gabor.challenge.feature.market.data.remote
 
 import com.gabor.challenge.core.exception.RemoteApiErrorException
 import com.gabor.challenge.core.repository.RemoteDataSource
-import com.gabor.challenge.feature.market.domain.entites.FiatCurrency
-import com.gabor.challenge.feature.market.domain.entites.MarketData
+import com.gabor.challenge.feature.market.domain.FiatCurrency
+import com.gabor.challenge.feature.market.domain.MarketData
 
 class RemoteMarketDataSource(
     private val api: CoingeckoMarketDataApi
@@ -11,7 +11,7 @@ class RemoteMarketDataSource(
 
     override suspend fun fetch(arg: FiatCurrency): Result<List<MarketData>> {
         return try {
-            val response = api.fetchMarketData(arg.symbol)
+            val response = api.fetchMarketData(arg.currencyName)
             val data = response.body()
             if (data != null) {
                 Result.success(data.map { it.toMarketData(arg) })
