@@ -15,7 +15,6 @@ class LocalCoinDetailsDataSource(
 
     override suspend fun update(arg: String, data: CoinDetails?) {
         data?.let {
-            coinDetailsDao.clear()
             coinDetailsDao.insertCoinDetails(data.toDatabaseEntity())
         }
     }

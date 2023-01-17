@@ -19,6 +19,7 @@ class CoinDetailsViewModel(
     val coinDetailsFlow: StateFlow<CoinDetailsUiState> = _coinDetailsFlow
 
     fun handleIntent(intent: CoinDetailsIntent) {
+        Timber.d("Intent: $intent")
         val newState: CoinDetailsUiState = when (intent) {
             is CoinDetailsIntent.Fetch -> fetch(intent.id)
             is CoinDetailsIntent.Refresh -> refresh(intent.id)

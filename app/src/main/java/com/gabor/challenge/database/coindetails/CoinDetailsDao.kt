@@ -24,7 +24,7 @@ const val COIN_DETAILS_TABLE = "COIN_DETAILS_TABLE"
 
 @Entity(tableName = COIN_DETAILS_TABLE)
 data class CoinDetailsEntity(
-    @PrimaryKey(autoGenerate = false) val id: String,
+    @PrimaryKey val id: String,
     val symbol: String,
     val name: String,
     val image: String?,

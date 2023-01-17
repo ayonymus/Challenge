@@ -2,6 +2,7 @@ package com.gabor.challenge.feature.coindetails.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import com.gabor.challenge.feature.coindetails.presentation.CoinDetailsIntent
 import com.gabor.challenge.feature.coindetails.presentation.CoinDetailsViewModel
 import com.gabor.challenge.feature.coindetails.presentation.ui.CoinDetailsScreen
@@ -13,7 +14,7 @@ fun CoinDetailsRoute(
     id: String?,
     onNavigateBack: () -> Unit
 ) {
-    viewModel.handleIntent(CoinDetailsIntent.Fetch(id))
+    remember { viewModel.handleIntent(CoinDetailsIntent.Fetch(id)) }
     CoinDetailsScreen(
         state = viewModel.coinDetailsFlow.collectAsState(),
         onNavigateBack = onNavigateBack,
