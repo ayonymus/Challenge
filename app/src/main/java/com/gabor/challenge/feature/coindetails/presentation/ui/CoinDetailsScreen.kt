@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -21,9 +20,9 @@ import timber.log.Timber
 
 
 @Composable
-fun CoinDetailsScreen(state: State<CoinDetailsUiState>) {
+fun CoinDetailsScreen(state: State<CoinDetailsUiState>, onNavigateBack: () -> Unit) {
     Scaffold(
-        topBar =  { appBar() },
+        topBar =  { appBar(onNavigateBack) },
         content = { contentPadding ->
             Column(
                 modifier = Modifier.padding(contentPadding)
@@ -41,13 +40,11 @@ fun CoinDetailsScreen(state: State<CoinDetailsUiState>) {
 }
 
 @Composable
-fun appBar() {
+fun appBar(onNavigateBack: () -> Unit) {
     TopAppBar(
         title = { Text(text = stringResource(id = R.string.coin_details)) },
         navigationIcon = {
-            IconButton(onClick = {
-                Timber.d("Navigate back")
-            }) {
+            IconButton(onClick = onNavigateBack) {
                 Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Back icon")
             }
         }
@@ -58,7 +55,7 @@ fun appBar() {
 @Composable
 fun CoinDetailsScreenInitialPreview() {
     val state = mutableStateOf(CoinDetailsUiState(true, null, null))
-    CoinDetailsScreen(state)
+    CoinDetailsScreen(state) { }
 }
 
 @Preview
@@ -74,6 +71,6 @@ fun CoinDetailsScreenDataPreview() {
         lastUpdated = ""
     )
     val state = mutableStateOf(CoinDetailsUiState(false, data, null))
-    CoinDetailsScreen(state)
+    CoinDetailsScreen(state) { }
 }
 
