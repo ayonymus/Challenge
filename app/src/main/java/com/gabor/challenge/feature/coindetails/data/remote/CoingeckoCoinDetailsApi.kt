@@ -52,6 +52,5 @@ fun CoingeckoCoinDetails.toCoinDetails() = CoinDetails(
     id = this.id,
     homepage = this.links?.homepage?.get(0),
     description = this.description?.en,
-    genesisData = this.genesisDate,
     lastUpdated = this.lastUpdated
 )

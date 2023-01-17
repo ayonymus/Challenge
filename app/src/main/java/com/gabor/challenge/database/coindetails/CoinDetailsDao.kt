@@ -30,6 +30,5 @@ data class CoinDetailsEntity(
     val image: String?,
     val homepage: String?,
     val description: String?,
-    val genesisData: String?,
     val lastUpdated: String?
 )

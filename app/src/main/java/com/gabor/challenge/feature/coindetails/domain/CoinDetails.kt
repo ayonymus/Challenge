@@ -7,6 +7,5 @@ data class CoinDetails(
     val id: String,
     val homepage: String?,
     val description: String?,
-    val genesisData: String?,
     val lastUpdated: String?
 )
