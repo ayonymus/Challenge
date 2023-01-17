@@ -1,7 +1,7 @@
 package com.gabor.challenge.feature.coindetails.data.remote
 
 import com.gabor.challenge.core.repository.RemoteDataSource
-import com.gabor.challenge.feature.market.data.remote.ApiErrorException
+import com.gabor.challenge.core.exception.RemoteApiErrorException
 import com.gabor.challenge.feature.coindetails.domain.CoinDetails
 
 class RemoteCoinDetailsSource(
@@ -16,7 +16,7 @@ class RemoteCoinDetailsSource(
             if (data != null) {
                 Result.success(data.toCoinDetails())
             } else {
-                Result.failure(ApiErrorException(response.message(), response.code(), response.errorBody()?.toString()))
+                Result.failure(RemoteApiErrorException(response.message(), response.code(), response.errorBody()?.toString()))
             }
         } catch (exception: Exception) {
             Result.failure(exception)
