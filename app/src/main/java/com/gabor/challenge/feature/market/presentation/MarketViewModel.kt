@@ -32,14 +32,14 @@ class MarketViewModel(
         viewModelScope.launch {
             handleResult(fetchMarketDataUseCase())
         }
-        return _marketFlow.value.copy(isLoading = true)
+        return _marketFlow.value.copy(isLoading = true, errors = null)
     }
 
     private fun refresh(): MarketUiState {
         viewModelScope.launch {
             handleResult(refreshMarketDataUseCase())
         }
-        return _marketFlow.value.copy(isLoading = true)
+        return _marketFlow.value.copy(isLoading = true, errors = null)
     }
 
     private suspend fun handleResult(result: Result<List<MarketData>>) {
