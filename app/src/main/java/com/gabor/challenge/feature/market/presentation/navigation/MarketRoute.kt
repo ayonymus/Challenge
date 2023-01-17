@@ -10,11 +10,12 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun MarketRoute(
     viewModel: MarketViewModel = koinViewModel(),
-    onNavigateToDetails: (id: String) -> Unit
+    onNavigateToDetails: (id: String) -> Unit,
 ) {
     viewModel.handleIntent(MarketIntent.Fetch)
     MarketScreen(
         state = viewModel.marketFlow.collectAsState(),
-        onNavigateToDetails = onNavigateToDetails
+        onNavigateToDetails = onNavigateToDetails,
+        onRefresh = { viewModel.handleIntent(MarketIntent.Refresh) }
     )
 }
