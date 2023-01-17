@@ -59,11 +59,13 @@ fun MarketScreen(
                     )
                 }
             }
-            if (state.value.errors != null) {
+            if (state.value.hasError) {
+                val genericError = stringResource(id = R.string.generic_error)
+                val refreshText =  stringResource(id = R.string.refresh)
                 scope.launch {
                     val snackbarResult = snackbarHostState.showSnackbar(
-                        message = "Error loading data", // TODO
-                        actionLabel = "REFRESH",
+                        message = genericError,
+                        actionLabel = refreshText,
                     )
                     if (snackbarResult == SnackbarResult.ActionPerformed) {
                         onRefresh()
@@ -100,7 +102,7 @@ fun MarketList(
 @Preview
 @Composable
 fun MarketListScreenInitialPreview() {
-    val marketSate = MarketUiState(true, null, null)
+    val marketSate = MarketUiState(true, null, false)
     val state = mutableStateOf(marketSate)
     MarketScreen(state, { }) { }
 }
@@ -116,7 +118,7 @@ fun MarketListScreenWithDataPreview() {
     val marketSate = MarketUiState(
         isLoading = false,
         latestData = MutableList(10) { marketData },
-        errors = null)
+        hasError = false)
     val state = mutableStateOf(marketSate)
     MarketScreen(state, { }) { }
 }
@@ -132,7 +134,7 @@ fun MarketListScreenWithDataRefreshingPreview() {
     val marketSate = MarketUiState(
         isLoading = true,
         latestData = MutableList(10) { marketData },
-        errors = null)
+        hasError = false)
     val state = mutableStateOf(marketSate)
     MarketScreen(state, { }) { }
 }

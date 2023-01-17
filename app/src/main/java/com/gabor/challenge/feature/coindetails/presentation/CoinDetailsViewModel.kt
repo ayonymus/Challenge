@@ -10,13 +10,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-
 class CoinDetailsViewModel(
     private val fetchCoinDetailsUseCase: FetchCoinDetailsUseCase,
     private val refreshCoinDetailsUseCase: RefreshCoinDetailsUseCase
 ) : ViewModel() {
 
-    private val _coinDetailsFlow = MutableStateFlow(CoinDetailsUiState(true,null, null))
+    private val _coinDetailsFlow = MutableStateFlow(CoinDetailsUiState(true,null, false))
     val coinDetailsFlow: StateFlow<CoinDetailsUiState> = _coinDetailsFlow
 
     fun handleIntent(intent: CoinDetailsIntent) {
@@ -31,25 +30,25 @@ class CoinDetailsViewModel(
 
     private fun fetch(id: String?): CoinDetailsUiState {
         return if (id == null) {
-            Timber.e("Coin ID not received!")
-            _coinDetailsFlow.value.copy(isLoading = false, error = "Coin ID not received") // TODO
+            Timber.e("Framework error: Coin ID not received!")
+            _coinDetailsFlow.value.copy(isLoading = false, hasError = true)
         } else {
             viewModelScope.launch {
                 handleResult(fetchCoinDetailsUseCase(id))
             }
-            _coinDetailsFlow.value.copy(isLoading = true)
+            _coinDetailsFlow.value.copy(isLoading = true, hasError = false)
         }
     }
 
     private fun refresh(id: String?): CoinDetailsUiState {
         return if (id == null) {
-            Timber.e("Coin ID not received!")
-            _coinDetailsFlow.value.copy(isLoading = false, error = "Coin ID not received") // TODO
+            Timber.e("Framework error: Coin ID not received!")
+            _coinDetailsFlow.value.copy(isLoading = false, hasError = true)
         } else {
             viewModelScope.launch {
                 handleResult(refreshCoinDetailsUseCase(id))
             }
-            _coinDetailsFlow.value.copy(isLoading = true)
+            _coinDetailsFlow.value.copy(isLoading = true, hasError = false)
         }
     }
 
@@ -60,7 +59,7 @@ class CoinDetailsViewModel(
                     _coinDetailsFlow.value.copy(
                         isLoading = false,
                         latestData = data,
-                        error = null,
+                        hasError = false,
                     )
                 )
             },
@@ -69,7 +68,7 @@ class CoinDetailsViewModel(
                 _coinDetailsFlow.emit(
                     _coinDetailsFlow.value.copy(
                         isLoading = false,
-                        error = "There was an error getting required data", // TODO
+                        hasError = true
                     )
                 )
             }
@@ -80,7 +79,7 @@ class CoinDetailsViewModel(
 data class CoinDetailsUiState(
     val isLoading: Boolean,
     val latestData: CoinDetails?,
-    val error: String?
+    val hasError: Boolean
 )
 
 sealed class CoinDetailsIntent {

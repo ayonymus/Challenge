@@ -15,7 +15,7 @@ class MarketViewModel(
     private val refreshMarketDataUseCase: RefreshMarketDataUseCase
 ) : ViewModel() {
 
-    private val _marketFlow = MutableStateFlow(MarketUiState(true,null, null))
+    private val _marketFlow = MutableStateFlow(MarketUiState(true,null, false))
     val marketFlow: StateFlow<MarketUiState> = _marketFlow
 
     fun handleIntent(intent: MarketIntent) {
@@ -32,14 +32,14 @@ class MarketViewModel(
         viewModelScope.launch {
             handleResult(fetchMarketDataUseCase())
         }
-        return _marketFlow.value.copy(isLoading = true, errors = null)
+        return _marketFlow.value.copy(isLoading = true, hasError = false)
     }
 
     private fun refresh(): MarketUiState {
         viewModelScope.launch {
             handleResult(refreshMarketDataUseCase())
         }
-        return _marketFlow.value.copy(isLoading = true, errors = null)
+        return _marketFlow.value.copy(isLoading = true, hasError = false)
     }
 
     private suspend fun handleResult(result: Result<List<MarketData>>) {
@@ -49,7 +49,7 @@ class MarketViewModel(
                     _marketFlow.value.copy(
                         isLoading = false,
                         latestData = data,
-                        errors = null,
+                        hasError = false,
                     )
                 )
             },
@@ -58,7 +58,7 @@ class MarketViewModel(
                 _marketFlow.emit(
                     _marketFlow.value.copy(
                         isLoading = false,
-                        errors = "There was an error getting required data", // TODO
+                        hasError = true
                     )
                 )
             }
@@ -69,7 +69,7 @@ class MarketViewModel(
 data class MarketUiState(
     val isLoading: Boolean,
     val latestData: List<MarketData>?,
-    val errors: String?
+    val hasError: Boolean
 )
 
 sealed class MarketIntent {
