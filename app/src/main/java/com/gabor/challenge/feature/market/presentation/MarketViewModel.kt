@@ -19,50 +19,58 @@ class MarketViewModel(
     val marketFlow: StateFlow<MarketUiState> = _marketFlow
 
     fun handleIntent(intent: MarketIntent) {
-        val newState: MarketUiState = when (intent) {
+        when (intent) {
             is MarketIntent.Fetch -> fetch()
             is MarketIntent.Refresh -> refresh()
         }
-        viewModelScope.launch {
-            _marketFlow.emit(newState)
-        }
     }
 
-    private fun fetch(): MarketUiState {
+    private fun fetch() {
         viewModelScope.launch {
+            _marketFlow.update(isLoading = true, hasError = false)
             handleResult(fetchMarketDataUseCase())
         }
-        return _marketFlow.value.copy(isLoading = true, hasError = false)
     }
 
-    private fun refresh(): MarketUiState {
+    private fun refresh() {
         viewModelScope.launch {
+            _marketFlow.update(isLoading = true, hasError = false)
             handleResult(refreshMarketDataUseCase())
         }
-        return _marketFlow.value.copy(isLoading = true, hasError = false)
     }
 
     private suspend fun handleResult(result: Result<List<MarketData>>) {
         result.fold(
             onSuccess = { data ->
-                _marketFlow.emit(
-                    _marketFlow.value.copy(
-                        isLoading = false,
-                        latestData = data,
-                        hasError = false,
-                    )
+                _marketFlow.update(
+                    isLoading = false,
+                    latestData = data,
+                    hasError = false,
                 )
             },
             onFailure = {
                 Timber.e(it)
-                _marketFlow.emit(
-                    _marketFlow.value.copy(
-                        isLoading = false,
-                        hasError = true
-                    )
+                _marketFlow.update(
+                    isLoading = false,
+                    hasError = true
                 )
             }
         )
+    }
+}
+
+private suspend fun MutableStateFlow<MarketUiState>.update(
+    isLoading: Boolean? = null,
+    latestData: List<MarketData>? = null,
+    hasError: Boolean? = null
+) {
+    this.value.let { original ->
+        val newState = MarketUiState(
+            isLoading = isLoading ?: original.isLoading,
+            latestData = latestData ?: original.latestData,
+            hasError = hasError ?: original.hasError
+        )
+        this.emit(newState)
     }
 }
 

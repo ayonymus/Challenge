@@ -20,60 +20,68 @@ class CoinDetailsViewModel(
 
     fun handleIntent(intent: CoinDetailsIntent) {
         Timber.d("Intent: $intent")
-        val newState: CoinDetailsUiState = when (intent) {
+        when (intent) {
             is CoinDetailsIntent.Fetch -> fetch(intent.id)
             is CoinDetailsIntent.Refresh -> refresh(intent.id)
         }
-        viewModelScope.launch {
-            _coinDetailsFlow.emit(newState)
-        }
     }
 
-    private fun fetch(id: String?): CoinDetailsUiState {
-        return if (id == null) {
-            Timber.e("Framework error: Coin ID not received!")
-            _coinDetailsFlow.value.copy(isLoading = false, hasError = true)
-        } else {
-            viewModelScope.launch {
+    private fun fetch(id: String?) {
+        viewModelScope.launch {
+            if (id == null) {
+                Timber.e("Navigation error: Coin ID not received!")
+                _coinDetailsFlow.update(isLoading = false, hasError = true)
+            } else {
+                _coinDetailsFlow.update(isLoading = true, hasError = false)
                 handleResult(fetchCoinDetailsUseCase(id))
             }
-            _coinDetailsFlow.value.copy(isLoading = true, hasError = false)
         }
     }
 
-    private fun refresh(id: String?): CoinDetailsUiState {
-        return if (id == null) {
-            Timber.e("Framework error: Coin ID not received!")
-            _coinDetailsFlow.value.copy(isLoading = false, hasError = true)
-        } else {
-            viewModelScope.launch {
+    private fun refresh(id: String?) {
+        viewModelScope.launch {
+            if (id == null) {
+                Timber.e("Navigation error: Coin ID not received!")
+                _coinDetailsFlow.update(isLoading = false, hasError = true)
+            } else {
+                _coinDetailsFlow.update(isLoading = true, hasError = false)
                 handleResult(refreshCoinDetailsUseCase(id))
             }
-            _coinDetailsFlow.value.copy(isLoading = true, hasError = false)
         }
     }
 
     private suspend fun handleResult(result: Result<CoinDetails?>) {
         result.fold(
             onSuccess = { data ->
-                _coinDetailsFlow.emit(
-                    _coinDetailsFlow.value.copy(
-                        isLoading = false,
-                        latestData = data,
-                        hasError = false,
-                    )
+                _coinDetailsFlow.update(
+                    isLoading = false,
+                    latestData = data,
+                    hasError = false,
                 )
             },
             onFailure = {
                 Timber.e(it)
-                _coinDetailsFlow.emit(
-                    _coinDetailsFlow.value.copy(
-                        isLoading = false,
-                        hasError = true
-                    )
+                _coinDetailsFlow.update(
+                    isLoading = false,
+                    hasError = true
                 )
             }
         )
+    }
+}
+
+private suspend fun MutableStateFlow<CoinDetailsUiState>.update(
+    isLoading: Boolean? = null,
+    latestData: CoinDetails? = null,
+    hasError: Boolean? = null
+) {
+    this.value.let { original ->
+        val newState = CoinDetailsUiState(
+            isLoading = isLoading ?: original.isLoading,
+            latestData = latestData ?: original.latestData,
+            hasError = hasError ?: original.hasError
+        )
+        this.emit(newState)
     }
 }
 
