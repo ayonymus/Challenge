@@ -4,18 +4,24 @@ import com.gabor.challenge.core.repository.LocalDataSource
 import com.gabor.challenge.database.coindetails.CoinDetailsDao
 import com.gabor.challenge.database.coindetails.CoinDetailsEntity
 import com.gabor.challenge.feature.coindetails.domain.CoinDetails
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class LocalCoinDetailsDataSource(
-    private val coinDetailsDao: CoinDetailsDao
+    private val coinDetailsDao: CoinDetailsDao,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ): LocalDataSource<String, CoinDetails?> {
 
-    override suspend fun fetch(arg: String): Result<CoinDetails?> {
-        return Result.success(coinDetailsDao.getCoinDetails(arg)?.toDomain())
+    override suspend fun fetch(arg: String): Result<CoinDetails?> = withContext(dispatcher) {
+        return@withContext Result.success(coinDetailsDao.getCoinDetails(arg)?.toDomain())
     }
 
     override suspend fun update(arg: String, data: CoinDetails?) {
-        data?.let {
-            coinDetailsDao.insertCoinDetails(data.toDatabaseEntity())
+        withContext(dispatcher) {
+            data?.let {
+                coinDetailsDao.insertCoinDetails(data.toDatabaseEntity())
+            }
         }
     }
 }
